@@ -1,0 +1,39 @@
+.new-card{
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+.link-panel{
+	float: right;
+	
+}
+
+.title-panel{
+	float:left;
+}
+
+.invalid {
+    border: 2px solid red;
+}
+
+.span_view{
+	padding-top: 7px;
+}
+
+h1 {
+    color: #5bc0de;
+   text-align: center;
+}
+
+footer {
+    position: fixed;
+    height: 50px;
+    bottom: 0;
+    width: 100%;
+    background-color: #ccc
+}
+
+footer p {
+    padding: 15px;
+}

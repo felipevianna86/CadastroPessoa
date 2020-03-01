@@ -1,5 +1,6 @@
 package br.com.cadastro.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.cadastro.entity.Pessoa;
 import br.com.cadastro.repository.PessoaRepository;
+import br.com.cadastro.repository.filter.PessoaFilter;
 import br.com.cadastro.service.PessoaService;
 
 /**
@@ -69,6 +71,20 @@ public class PessoaServiceImpl implements PessoaService {
 		return this.pessoaRepository.findByNomeIgnoreCaseContainingAndEmailAndSexoAndCpfAndCriadoPorOrderByDataCadastroDesc(nome, email, sexo, cpf, criadoPor, PageRequest.of(page, count));
 	}
 
+	@Override
+	public List<Pessoa> filtrar(PessoaFilter filtro) {
+		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
+		String email = filtro.getEmail() == null ? "%" : filtro.getEmail();
+		String cpf = filtro.getCpf() == null ? "%" : filtro.getCpf();
+		
+		return this.pessoaRepository.findByNomeIgnoreCaseContainingOrEmailContainingOrCpfContaining(nome, email, cpf);
+	}
+
+	@Override
+	public List<Pessoa> buscarTodos() {
+		
+		return this.pessoaRepository.findAll();
+	}
 	
 
 }

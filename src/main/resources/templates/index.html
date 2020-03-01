@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layoutPadrao}" lang="pt_BR">
+<head>
+    <title>Index</title>
+</head>
+<body>
+<div layout:fragment="conteudo" th:remove="tag">
+    <h1>Página inicial</h1>
+    <p>Apresentação</p>
+    <ul>
+        <li>Vá para o <a href="/pessoas" th:href="@{/pessoas}">Cadastro de Pessoas</a></li>
+    </ul>
+</div>
+</body>
+</html>

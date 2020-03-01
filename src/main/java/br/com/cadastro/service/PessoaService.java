@@ -1,9 +1,12 @@
 package br.com.cadastro.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import br.com.cadastro.entity.Pessoa;
+import br.com.cadastro.repository.filter.PessoaFilter;
 
 /**
  * Classe que define o service de Pessoa.
@@ -70,4 +73,18 @@ public interface PessoaService {
 	 * @return
 	 */
 	Page<Pessoa> findByParameters(int page, int count, String nome, String email, String sexo, String cpf, String criadoPor);
+	
+	/**
+	 * Filtrar pessoas utilizando parâmetros específicos.
+	 * @param filtro
+	 * @return
+	 */
+	List<Pessoa> filtrar(PessoaFilter filtro);
+	
+	/**
+	 * Filtrar pessoas sem utilizar parâmetros específicos.
+	 * @return
+	 */
+	List<Pessoa> buscarTodos();
+	
 }

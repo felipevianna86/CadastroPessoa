@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"	
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPadrao" lang="pt_BR">
+	
+<head>
+	<title>Lista de pessoas</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+		<span th:text="${mensagem}"></span>			
+	</div>
+	<div class="alert alert-danger" th:if="${!#strings.isEmpty(mensagemErro)}">
+		<span th:text="${mensagemErro}"></span>			
+	</div>
+	
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="clearfix">
+				<h3 class="panel-title title-panel">Lista de pessoas</h3>	
+				<a class="btn btn-link link-panel" href="/pessoas/novo">Cadastrar Pessoa</a>		
+			</div>
+		</div>
+				
+		<div class="panel-body">
+			<form action="" method="GET" class="form-horizontal" th:object="${filtro}">
+				<div class="form-group">
+					<div class="col-sm-4">
+						<div class="input-group">
+							<input class="form-control" placeholder="Digite o nome: "
+							autofocus="autofocus" th:field="*{nome}"
+							></input>
+							<span class="input-group-btn">
+								<button type="submit" class="btn btn-default" >
+									<i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			
+			</form>
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th class="text-center col-md-4">Nome</th>
+						<th class="text-center">E-mail</th>
+						<th class="text-center col-md-2">CPF</th>
+						<th class="col-md-2"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="pessoa : ${pessoas}">
+						<td class="text-center" th:text="${pessoa.nome}"> </td>
+						<td class="text-center" th:text="${pessoa.email}"> </td>
+						<td class="text-center" th:text="${pessoa.cpf}"> </td>						
+						<td class="text-center">
+							<a class="btn btn-link btn-sm" title="Editar" th:href="@{/pessoas/{id}(id=${pessoa.id})}"
+							data-placement="top" > 
+								<span class="fa fa-pencil-alt"></span>
+							</a>
+							<a class="btn btn-link btn-sm" title="Visualizar" th:href="@{/pessoas/visualizar/{id}(id=${pessoa.id})}"
+							 data-placement="top" > 
+								<span class="fa fa-eye"></span>
+							</a>							
+							<a class="btn btn-link btn-sm" th:href="@{/pessoas/delete/{id}(id=${pessoa.id})}"
+							 title="Excluir" data-placement="top" onclick="return confirm('Deseja realmente remover esta pessoa?');" > 
+								<span class="fa fa-trash-alt"></span>
+							</a>
+																			
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6" th:if="${#lists.isEmpty(pessoas)}">Nenhuma pessoa foi encontrada</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>	
+			</div>
+</section>
+</html>

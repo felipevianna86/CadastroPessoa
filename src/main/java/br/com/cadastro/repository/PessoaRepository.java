@@ -1,5 +1,7 @@
 package br.com.cadastro.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -45,5 +47,14 @@ public interface PessoaRepository extends MongoRepository<Pessoa, String>, Pagin
 	 */
 	Page<Pessoa> findByNomeIgnoreCaseContainingAndEmailAndSexoAndCpfAndCriadoPorOrderByDataCadastroDesc(String nome, String email, String sexo, String cpf,
 			String criadoPor, Pageable pages);
+	
+	/**
+	 * Retorna uma lista de pessoas através dos parâmetros passados.
+	 * @param nome
+	 * @param email
+	 * @param cpf
+	 * @return
+	 */
+	List<Pessoa> findByNomeIgnoreCaseContainingOrEmailContainingOrCpfContaining(String nome, String email, String cpf);
 
 }

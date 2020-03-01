@@ -27,7 +27,6 @@ public class Pessoa {
 	@NotBlank(message = "Nome obrigatório")
 	private String nome;
 	
-	@Indexed(unique = true)
 	@Email(message = "E-mail inválido")
 	private String email;	
 	
