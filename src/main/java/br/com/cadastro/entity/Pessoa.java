@@ -24,7 +24,7 @@ public class Pessoa {
 	@Id
 	private String id;
 	
-	@NotBlank(message = "Nome obrigatório")
+	@NotBlank(message = "Nome: campo obrigatório")
 	private String nome;
 	
 	@Email(message = "E-mail inválido")
@@ -32,6 +32,7 @@ public class Pessoa {
 	
 	private char sexo;
 	
+	@NotBlank(message = "Data de Nascimento: campo obrigatório")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 	
@@ -40,7 +41,7 @@ public class Pessoa {
 	private String nacionalidade;
 	
 	@Indexed(unique = true)
-	@NotBlank(message = "CPF obrigatório")
+	@NotBlank(message = "CPF: campo obrigatório")
 	@CPF(message = "CPF inválido")
 	private String cpf;
 	
