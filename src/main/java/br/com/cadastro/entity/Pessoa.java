@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.data.annotation.Id;
@@ -32,7 +33,7 @@ public class Pessoa {
 	
 	private char sexo;
 	
-	@NotBlank(message = "Data de Nascimento: campo obrigatório")
+	@NotNull(message = "Data de nascimento: campo obrigatório")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 	
