@@ -21,6 +21,37 @@
 	padding-top: 7px;
 }
 
+.background {
+    width: 100%;
+    background-image: url('../images/cover_4_blur.jpg'); 
+ 	height: 100% !important;
+}
+
+.background-git {
+    background-image: url('../images/git.png'); 
+}
+
+.lessons-list {
+	text-align: center;
+	align-content:center;
+    list-style: none;
+    margin: 0;
+    background: #EFEFEF;
+    border-radius: 10px;
+    font-size: 15px;
+    border: solid 1px #EFEFEF;
+    height: 500px;
+    width: 800px;
+}
+
+.navbar-color{
+	background-color: #CAEBF2;
+	position: relative;
+    min-height: 50px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
 h1 {
     color: #5bc0de;
    text-align: center;
@@ -31,7 +62,7 @@ footer {
     height: 50px;
     bottom: 0;
     width: 100%;
-    background-color: #ccc
+    background-color: #EFEFEF;
 }
 
 footer p {

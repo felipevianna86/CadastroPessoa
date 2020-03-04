@@ -3,6 +3,8 @@ package br.com.cadastro.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -37,7 +39,7 @@ public class TPessoaController {
 	
 	private static final String PESQUISA = "pesquisa_pessoas";
 	
-	private static final String VISUALIZAR = "visualizar_pessoa";
+	private static final String VISUALIZAR = "visualizar_pessoa";	
 	
 	/**
 	 * Método que inicializa o cadastro de uma Pessoa.
@@ -64,9 +66,9 @@ public class TPessoaController {
 		if(errors.hasErrors()) 
 			return CADASTRO;		
 		
-		try {	
+		try {
+			
 			if(pessoa.getId() !=null && pessoa.getId() > 0) {
-				System.out.println(pessoa);
 				Pessoa pessoaDB = pessoaService.findById(pessoa.getId());
 				pessoa.setDataCadastro(pessoaDB.getDataCadastro());
 				pessoa.setUltimaAtualizacao(new Date());
@@ -89,9 +91,14 @@ public class TPessoaController {
 	 * @return
 	 */
 	@GetMapping("{id}")
-	public ModelAndView editar(@PathVariable("id") Pessoa pessoa) {		
+	public ModelAndView editar(@PathVariable("id") @Valid Pessoa pessoa) {		
 		ModelAndView model = new ModelAndView(CADASTRO);
-		model.addObject(pessoa);
+		
+		try {
+			model.addObject(pessoa);
+		}catch (IllegalArgumentException e) {
+			model.addObject(new Pessoa());
+		}
 		
 		return model;
 	}
@@ -102,9 +109,17 @@ public class TPessoaController {
 	 * @return
 	 */
 	@GetMapping("/visualizar/{id}")
-	public ModelAndView visualizar(@PathVariable("id") Pessoa pessoa) {		
+	public ModelAndView visualizar(@PathVariable("id") @Valid Pessoa pessoa) {		
 		ModelAndView model = new ModelAndView(VISUALIZAR);
-		model.addObject(pessoa);
+		try {
+			model.addObject(pessoa);		
+		
+		}catch (NumberFormatException e) {
+			model.addObject(new Pessoa());
+		}		
+		catch (IllegalArgumentException e) {
+			model.addObject(new Pessoa());
+		}
 		
 		return model;
 	}
@@ -144,6 +159,6 @@ public class TPessoaController {
 			attributes.addFlashAttribute("mensagemErro", e.getMessage());
 			return "redirect:/pessoas";
 		}
-	}
+	}	
 	
 }
