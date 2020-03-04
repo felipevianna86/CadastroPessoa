@@ -1,12 +1,14 @@
 package br.com.cadastro.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.hibernate.annotations.GenericGenerator;
 
 import br.com.cadastro.enums.ProfileEnum;
 
@@ -17,12 +19,16 @@ import br.com.cadastro.enums.ProfileEnum;
  *
  *	Classe que representa um usuário do sistema.
  */
-@Document
+@Entity
+@Table(name = "usuario")
 public class Usuario {
-	@Id
-	private String id;
 	
-	@Indexed(unique = true)
+	@Id
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "increment")
+	private Long id;
+	
+	
 	@NotBlank(message = "E-mail required")
 	@Email(message = "E-mail invalid")
 	private String email;
@@ -32,12 +38,13 @@ public class Usuario {
 	private String password;
 	
 	private ProfileEnum profile;
+	
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

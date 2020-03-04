@@ -19,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.cadastro.entity.Pessoa;
 import br.com.cadastro.repository.filter.PessoaFilter;
 import br.com.cadastro.service.PessoaService;
-import br.com.cadastro.utils.ValidatorUtils;
 
 /**
  * Controlador responsável por ações referentes à classe Pessoa.
@@ -65,14 +64,16 @@ public class TPessoaController {
 		if(errors.hasErrors()) 
 			return CADASTRO;		
 		
-		try {			
-			if(ValidatorUtils.isNotEmpty(pessoa.getId())) {
+		try {	
+			if(pessoa.getId() !=null && pessoa.getId() > 0) {
+				System.out.println(pessoa);
 				Pessoa pessoaDB = pessoaService.findById(pessoa.getId());
 				pessoa.setDataCadastro(pessoaDB.getDataCadastro());
 				pessoa.setUltimaAtualizacao(new Date());
 			}
 			else
 				pessoa.setDataCadastro(new Date());
+			
 			pessoaService.createOrUpdate(pessoa);
 			attributes.addFlashAttribute("mensagem", "Operação realizada com sucesso!");		
 			return "redirect:/pessoas/novo";
@@ -132,7 +133,7 @@ public class TPessoaController {
 	 * @return
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String excluir(@PathVariable String id, RedirectAttributes attributes) {
+	public String excluir(@PathVariable Long id, RedirectAttributes attributes) {
 		
 		try {
 		pessoaService.delete(id);		

@@ -45,13 +45,13 @@ public interface PessoaService {
 	 * @param pessoaId
 	 * @return
 	 */
-	Pessoa findById(String pessoaId);
+	Pessoa findById(Long pessoaId);
 	
 	/**
 	 * Remove uma pessoa através do seu ID.
 	 * @param pessoaId
 	 */
-	void delete(String pessoaId);
+	void delete(Long pessoaId);
 	
 	/**
 	 * Busca todos as pessoas.
@@ -72,7 +72,7 @@ public interface PessoaService {
 	 * @param criadoPor
 	 * @return
 	 */
-	Page<Pessoa> findByParameters(int page, int count, String nome, String email, String sexo, String cpf, String criadoPor);
+	Page<Pessoa> findByParameters(int page, int count, String nome, String email, String sexo, String cpf);
 	
 	/**
 	 * Filtrar pessoas utilizando parâmetros específicos.

@@ -28,7 +28,6 @@ import br.com.cadastro.response.Response;
 import br.com.cadastro.security.jwt.JwtTokenUtil;
 import br.com.cadastro.service.PessoaService;
 import br.com.cadastro.service.UsuarioService;
-import br.com.cadastro.utils.ValidatorUtils;
 
 
 /**
@@ -70,7 +69,6 @@ public class PessoaController {
 				return ResponseEntity.badRequest().body(response);
 			}
 			
-			pessoa.setCriadoPor(userFromRequest(request));
 			pessoa.setDataCadastro(new Date());
 			
 			Pessoa pessoaCriada = pessoaService.createOrUpdate(pessoa);
@@ -106,10 +104,8 @@ public class PessoaController {
 			}			
 			
 			Pessoa pessoaDB = pessoaService.findById(pessoa.getId());
-			pessoa.setAtualizadoPor(userFromRequest(request));
 			pessoa.setUltimaAtualizacao(new Date());
 			pessoa.setDataCadastro(pessoaDB.getDataCadastro());
-			pessoa.setCriadoPor(pessoaDB.getCriadoPor());
 			
 			Pessoa pessoaAtualizada = pessoaService.createOrUpdate(pessoa);
 			response.setData(pessoaAtualizada);
@@ -129,7 +125,7 @@ public class PessoaController {
 	 */
 	@GetMapping(value = "{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Response<Pessoa>> findById(@PathVariable("id") String id){
+	public ResponseEntity<Response<Pessoa>> findById(@PathVariable("id") Long id){
 		
 		Response<Pessoa> response = new Response<>();
 		
@@ -176,7 +172,7 @@ public class PessoaController {
 	 */
 	@DeleteMapping(value = "{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Response<String>> delete(@PathVariable("id") String id){
+	public ResponseEntity<Response<String>> delete(@PathVariable("id") Long id){
 		
 		Response<String> response = new Response<>();
 		
@@ -201,25 +197,23 @@ public class PessoaController {
 	 * @param email
 	 * @param sexo
 	 * @param cpf
-	 * @param criadoPor
 	 * @return
 	 */
 	@GetMapping(value = "{page}/{count}/{number}/{title}/{status}/{priority}/{assigned}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Response<Page<Pessoa>>> findByParams(HttpServletRequest request, @PathVariable("page") int page,
 			@PathVariable("count") int count, @PathVariable("nome") String nome, @PathVariable("email") String email, 
-			@PathVariable("sexo") String sexo, @PathVariable("cpf") String cpf, @PathVariable("criadoPor") String criadoPor){
+			@PathVariable("sexo") String sexo, @PathVariable("cpf") String cpf){
 		
 		nome = nome.equals("uninformed") ? "" : nome;
 		email = email.equals("uninformed") ? "" : email;
 		sexo = sexo.equals("uninformed") ? "" : sexo;	
 		cpf = cpf.equals("uninformed") ? "" : cpf;
-		criadoPor = criadoPor.equals("uninformed") ? "" : criadoPor;	
 		
 		Response<Page<Pessoa>> response = new Response<>();
 		Page<Pessoa> pessoas = null;
 				
-		pessoas = pessoaService.findByParameters(page, count, nome, email, sexo, cpf, criadoPor);	
+		pessoas = pessoaService.findByParameters(page, count, nome, email, sexo, cpf);	
 		
 		response.setData(pessoas);
 		return ResponseEntity.ok(response);
@@ -232,7 +226,7 @@ public class PessoaController {
 	 * @param result
 	 */
 	private void validateUpdatePessoa(Pessoa pessoa, BindingResult result) {
-		if(ValidatorUtils.isEmpty(pessoa.getId()))
+		if(pessoa.getId() > 0)
 			result.addError(new ObjectError("Pessoa", "ID não informado"));
 	}
 	

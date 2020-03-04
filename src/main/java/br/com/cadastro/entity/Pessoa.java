@@ -2,15 +2,19 @@ package br.com.cadastro.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 /**
  * 
@@ -19,11 +23,14 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author felipe
  *
  */
-@Document
+@Entity
+@Table(name = "pessoa")
 public class Pessoa {
 	
 	@Id
-	private String id;
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "increment")
+	private Long id;
 	
 	@NotBlank(message = "Nome: campo obrigatório")
 	private String nome;
@@ -35,32 +42,27 @@ public class Pessoa {
 	
 	@NotNull(message = "Data de nascimento: campo obrigatório")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	
 	private String naturalidade;
 	
 	private String nacionalidade;
 	
-	@Indexed(unique = true)
+	@Column(unique = true)
 	@NotBlank(message = "CPF: campo obrigatório")
 	@CPF(message = "CPF inválido")
 	private String cpf;
 	
 	private Date dataCadastro;
 	
-	private Date ultimaAtualizacao;
-	
-	@DBRef(lazy = true)
-	private Usuario criadoPor;
-	
-	@DBRef(lazy = true)
-	private Usuario atualizadoPor;
+	private Date ultimaAtualizacao;	
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -136,20 +138,4 @@ public class Pessoa {
 		this.ultimaAtualizacao = ultimaAtualizacao;
 	}
 
-	public Usuario getCriadoPor() {
-		return criadoPor;
 	}
-
-	public void setCriadoPor(Usuario criadoPor) {
-		this.criadoPor = criadoPor;
-	}
-
-	public Usuario getAtualizadoPor() {
-		return atualizadoPor;
-	}
-
-	public void setAtualizadoPor(Usuario atualizadoPor) {
-		this.atualizadoPor = atualizadoPor;
-	}	
-	
-}

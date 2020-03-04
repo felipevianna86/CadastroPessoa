@@ -43,7 +43,7 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 
 	@Override
-	public Pessoa findById(String pessoaId) {
+	public Pessoa findById(Long pessoaId) {
 		
 		Optional<Pessoa> pessoa = this.pessoaRepository.findById(pessoaId);
 		
@@ -54,8 +54,8 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 
 	@Override
-	public void delete(String pessoaId) {
-		this.pessoaRepository.deleteById(pessoaId);		
+	public void delete(Long pessoaId) {
+		this.pessoaRepository.deleteById(pessoaId);
 	}
 
 	@Override
@@ -65,10 +65,9 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 
 	@Override
-	public Page<Pessoa> findByParameters(int page, int count, String nome, String email, String sexo, String cpf,
-			String criadoPor) {
+	public Page<Pessoa> findByParameters(int page, int count, String nome, String email, String sexo, String cpf) {
 		
-		return this.pessoaRepository.findByNomeIgnoreCaseContainingAndEmailAndSexoAndCpfAndCriadoPorOrderByDataCadastroDesc(nome, email, sexo, cpf, criadoPor, PageRequest.of(page, count));
+		return this.pessoaRepository.findByNomeIgnoreCaseContainingAndEmailAndSexoAndCpfOrderByDataCadastroDesc(nome, email, sexo, cpf, PageRequest.of(page, count));
 	}
 
 	@Override

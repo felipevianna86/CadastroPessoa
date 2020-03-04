@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.cadastro.entity.Pessoa;
 
@@ -15,7 +14,8 @@ import br.com.cadastro.entity.Pessoa;
  * @author felipe
  *
  */
-public interface PessoaRepository extends MongoRepository<Pessoa, String>, PagingAndSortingRepository<Pessoa, String> {
+
+public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 	
 	/**
 	 * Retorna uma pessoa através do e-mail passado por parâmetro
@@ -41,12 +41,11 @@ public interface PessoaRepository extends MongoRepository<Pessoa, String>, Pagin
 	 * @param email
 	 * @param sexo
 	 * @param cpf
-	 * @param criadoPor
 	 * @param pages
 	 * @return
 	 */
-	Page<Pessoa> findByNomeIgnoreCaseContainingAndEmailAndSexoAndCpfAndCriadoPorOrderByDataCadastroDesc(String nome, String email, String sexo, String cpf,
-			String criadoPor, Pageable pages);
+	Page<Pessoa> findByNomeIgnoreCaseContainingAndEmailAndSexoAndCpfOrderByDataCadastroDesc(String nome, String email, String sexo, String cpf,
+			Pageable pages);
 	
 	/**
 	 * Retorna uma lista de pessoas através dos parâmetros passados.
