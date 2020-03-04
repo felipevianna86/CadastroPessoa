@@ -65,7 +65,7 @@
 				   		th:classappend="${#fields.hasErrors('dataNascimento')} ? invalid"
 				   		data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
 				   		data-date-autoclose="true" data-date-today-highlight="true" 
-				   		data-date-orientation="bottom" autocomplete="off"	/>
+				   		data-date-orientation="bottom" autocomplete="off" maxlength="10" onkeypress="MascaraData(this, event)"	/>
 				   </div>				   
 				</div>						
 				
