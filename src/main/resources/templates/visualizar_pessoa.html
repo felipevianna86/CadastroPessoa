@@ -78,7 +78,7 @@
 				<div class="form-group">
 				   <label class="col-sm-2 control-label" for="dataNascimento">Atualizado em</label>
 				   <div class="col-sm-2 span_view">
-				   		<span th:text="${#dates.format(pessoa.ultimaAtualizacao, 'dd/MM/yyyy HH:mm')}"/>
+				   		<span th:text="${pessoa.ultimaAtualizacao} ? ${#dates.format(pessoa.ultimaAtualizacao, 'dd/MM/yyyy HH:mm')}"/>
 				   </div>				   
 				</div>
 				

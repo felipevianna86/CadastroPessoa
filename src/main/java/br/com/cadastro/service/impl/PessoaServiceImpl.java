@@ -1,7 +1,6 @@
 package br.com.cadastro.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,29 +44,26 @@ public class PessoaServiceImpl implements PessoaService {
 	@Override
 	public Pessoa findById(Long pessoaId) {
 		
-		Optional<Pessoa> pessoa = this.pessoaRepository.findById(pessoaId);
-		
-		if(pessoa.isPresent()) {
-			return pessoa.get();
-		}
-		return null;
+		return this.pessoaRepository.findOne(pessoaId);
 	}
 
 	@Override
 	public void delete(Long pessoaId) {
-		this.pessoaRepository.deleteById(pessoaId);
+		this.pessoaRepository.delete(pessoaId);
 	}
 
 	@Override
 	public Page<Pessoa> findAll(int page, int count) {
 		
-		return this.pessoaRepository.findAll(PageRequest.of(page, count));
+		return this.pessoaRepository.findAll(new PageRequest(page, count));
 	}
 
 	@Override
 	public Page<Pessoa> findByParameters(int page, int count, String nome, String email, String sexo, String cpf) {
 		
-		return this.pessoaRepository.findByNomeIgnoreCaseContainingAndEmailAndSexoAndCpfOrderByDataCadastroDesc(nome, email, sexo, cpf, PageRequest.of(page, count));
+		PageRequest pageRequest = new PageRequest(page, count);
+		
+		return this.pessoaRepository.findByNomeIgnoreCaseContainingAndEmailAndSexoAndCpfOrderByDataCadastroDesc(nome, email, sexo, cpf, pageRequest);
 	}
 
 	@Override

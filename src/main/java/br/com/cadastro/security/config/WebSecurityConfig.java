@@ -57,7 +57,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		return authenticationManager();
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurerAdapter() {
@@ -80,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-          .withUser("admin").password(passwordEncoder().encode("admin"))
+          .withUser("admin").password("admin")
           .authorities("ROLE_ADMIN");
     }
 	

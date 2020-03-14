@@ -1,7 +1,5 @@
 package br.com.cadastro.service.impl;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,25 +36,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public Usuario findById(String usuarioId) {
 		
-		Optional<Usuario> usuario = this.usuarioRepository.findById(usuarioId);
-		
-		if(usuario.isPresent())
-			return usuario.get();
-		
-		return null;
+		return this.usuarioRepository.findOne(usuarioId);
 	}
 
 	@Override
 	public void delete(String usuarioId) {
 		
-		this.usuarioRepository.deleteById(usuarioId);
+		this.usuarioRepository.delete(usuarioId);
 		
 	}
 
 	@Override
 	public Page<Usuario> findAll(int page, int count) {
 		
-		return this.usuarioRepository.findAll(PageRequest.of(page, count));
+		return this.usuarioRepository.findAll(new PageRequest(page, count));
 	}
 	
 	
